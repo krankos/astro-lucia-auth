@@ -15,10 +15,11 @@ let password: FormDataEntryValue | null = null;
 
 if (Astro.request.method === "POST") {
 	const requestOrigin = Astro.request.headers.get("origin");
-	const isValidRequest = !!requestOrigin && requestOrigin === Astro.url.origin;
+	const isValidRequest =
+		!!requestOrigin && requestOrigin === Astro.url.origin;
 	if (!isValidRequest) {
 		return new Response(null, {
-			status: 403
+			status: 403,
 		});
 	}
 	const form = await Astro.request.formData();
@@ -36,11 +37,11 @@ if (Astro.request.method === "POST") {
 				primaryKey: {
 					providerId: "username",
 					providerUserId: username,
-					password
+					password,
 				},
 				attributes: {
-					username
-				}
+					username,
+				},
 			});
 			const session = await auth.createSession(user.userId);
 			authRequest.setSession(session); // set session cookie
@@ -73,6 +74,10 @@ if (Astro.request.method === "POST") {
 <MainLayout>
 	<h2>Create an account</h2>
 	<a href="/api/oauth?provider=github" class="button">Continue with Github</a>
+	<p class="center">or</p>
+	<a href="/api/oauth?provider=linkedin" class="button"
+		>Continue with linkedin</a
+	>
 	<p class="center">or</p>
 	<form method="post">
 		<label for="username">username</label><br />

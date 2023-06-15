@@ -12,10 +12,11 @@ let username: FormDataEntryValue | null = null;
 let password: FormDataEntryValue | null = null;
 if (Astro.request.method === "POST") {
 	const requestOrigin = Astro.request.headers.get("origin");
-	const isValidRequest = !!requestOrigin && requestOrigin === Astro.url.origin;
+	const isValidRequest =
+		!!requestOrigin && requestOrigin === Astro.url.origin;
 	if (!isValidRequest) {
 		return new Response(null, {
-			status: 403
+			status: 403,
 		});
 	}
 	const form = await Astro.request.formData();
@@ -54,6 +55,10 @@ if (Astro.request.method === "POST") {
 <MainLayout>
 	<h2>Sign in</h2>
 	<a href="/api/oauth?provider=github" class="button">Continue with Github</a>
+	<p class="center">or</p>
+	<a href="/api/oauth?provider=linkedin" class="button"
+		>Continue with Linkedin</a
+	>
 	<p class="center">or</p>
 	<form method="post">
 		<label for="username">username</label><br />
